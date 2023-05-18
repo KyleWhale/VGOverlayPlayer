@@ -419,7 +419,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         make.left.equalTo(self.topView).with.offset(10);
         make.bottom.top.equalTo(self.topView);
         make.width.mas_equalTo(30);
-
     }];
     
     [self.collectionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -427,7 +426,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         make.height.mas_equalTo(30);
         make.centerY.equalTo(self.topView);
         make.width.mas_equalTo(30);
-
     }];
     
     [self.subtitleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -435,7 +433,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         make.height.mas_equalTo(30);
         make.centerY.equalTo(self.topView);
         make.width.mas_equalTo(30);
-
     }];
     
     [self.shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -443,14 +440,12 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         make.height.mas_equalTo(30);
         make.centerY.equalTo(self.topView);
         make.width.mas_equalTo(30);
-
     }];
 
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.closeBtn.mas_right).with.offset(10);
         make.right.equalTo(self.shareBtn.mas_left).offset(-10);
         make.centerY.equalTo(self.closeBtn);
-
     }];
     
     [self.showView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -869,9 +864,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     }
     sender.selected = !sender.selected;
     
-    if (sender.isSelected) {
-        [self ht_reloadPlayerWith:YES];
-    }
 
     if (self.delegate&&[self.delegate respondsToSelector:@selector(kyvedioPlayer:clickedFullScreenButton:)]) {
         [self.delegate kyvedioPlayer:self clickedFullScreenButton:sender];
@@ -886,15 +878,11 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayer:clickedCloseButton:)]) {
         [self.delegate kyvedioPlayer:self clickedCloseButton:sender];
     }
-    if (self.isFullscreen == YES) {
-        [self ht_reloadPlayerWith:NO];
-    }
 }
 
 - (void)ht_reloadPlayerWith:(BOOL)isFullscreen {
     if (isFullscreen) {
         //全屏显示
-//        self.showView.alpha = 1.0;
         self.bottomView.alpha = 0.0;
         self.closeBtn.alpha = 0.0;
         self.topView.alpha = 0.0;
@@ -912,14 +900,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         }];
         
         [self.closeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.topView).with.offset(50);
+            make.left.equalTo(self.topView).with.offset(30);
             make.top.bottom.equalTo(self.topView);
-            make.width.mas_equalTo(30);
-
+            make.width.mas_equalTo(35);
         }];
         
-        [self.collectionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.topView).with.offset(-75);
+        [self.collectionBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.topView).with.offset(-40);
             make.height.width.mas_equalTo(30);
             make.centerY.equalTo(self.topView);
         }];
@@ -937,7 +924,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.right.equalTo(self).with.offset(0);
             make.height.mas_equalTo(80);
             make.bottom.equalTo(self).with.offset(0);
-
         }];
         
         [self.playOrPauseBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -948,13 +934,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         }];
         
         [self.leftTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.bottomView).with.offset(30);
+            make.left.equalTo(self.bottomView).with.offset(40);
             make.bottom.equalTo(self.playOrPauseBtn.mas_top).with.offset(-12);
             make.width.mas_equalTo(35);
         }];
         
         [self.rightTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.bottomView).with.offset(-30);
+            make.right.equalTo(self.bottomView).with.offset(-40);
             make.bottom.equalTo(self.playOrPauseBtn.mas_top).with.offset(-12);
             make.width.mas_equalTo(35);
         }];
@@ -964,7 +950,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.height.mas_equalTo(40);
             make.width.mas_equalTo([self screenFit:60]);
             make.centerY.equalTo(self.playOrPauseBtn);
-
         }];
     } else {
         self.showView.alpha = 0.0;
@@ -972,7 +957,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         [self.fullScreenBtn setTitle:@"" forState:UIControlStateNormal];
         self.nextBtn.hidden = YES;
         self.titleLabel.hidden = YES;
-//        self.fullScreenBtn.hidden = NO;
         [self.topView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.top.right.equalTo(self);
             make.height.mas_equalTo(40);
@@ -1003,7 +987,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.right.equalTo(self).with.offset(0);
             make.height.mas_equalTo(40);
             make.bottom.equalTo(self).with.offset(0);
-
         }];
         
         [self.playOrPauseBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -1011,7 +994,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.height.mas_equalTo(40);
             make.bottom.equalTo(self.bottomView).with.offset(0);
             make.width.mas_equalTo(40);
-
         }];
         
         [self.leftTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -1030,7 +1012,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.height.mas_equalTo(40);
             make.bottom.equalTo(self.bottomView).with.offset(0);
             make.width.mas_equalTo(40);
-
         }];
     }
 }
@@ -1636,6 +1617,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event{
     self.playShowView.hidden = YES;
 }
+
 #pragma mark - 全屏显示播放 和 缩小显示播放器
 /**
  *  全屏显示播放
@@ -1643,13 +1625,12 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  ＊ @param player 当前播放器
  ＊ @param fatherView 当前父视图
  **/
--(void)showFullScreenWithInterfaceOrientation:(UIInterfaceOrientation )interfaceOrientation player:(KYVedioPlayer *)player withFatherView:(UIView *)fatherView{
+- (void)showFullScreenWithInterfaceOrientation:(UIInterfaceOrientation )interfaceOrientation player:(KYVedioPlayer *)player withFatherView:(UIView *)fatherView{
 
     [player removeFromSuperview];
     if (@available(iOS 16.0, *)) {
         player.frame = CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.height, [[UIScreen mainScreen]bounds].size.width);
-        player.playerLayer.frame =  CGRectMake(0,0, [[UIScreen mainScreen]bounds].size.height,[[UIScreen mainScreen]bounds].size.width);
-
+        player.playerLayer.frame = CGRectMake(0,0, [[UIScreen mainScreen]bounds].size.height,[[UIScreen mainScreen]bounds].size.width);
         [player.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(80);
             make.top.mas_equalTo(player.frame.size.height-80);
@@ -1685,16 +1666,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     }
     [player.closeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(player.topView).with.offset(5);
-//        make.height.mas_equalTo(40);
         make.top.bottom.equalTo(player.topView);
         make.width.mas_equalTo(30);
-    }];
-    [player.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(player.topView).with.offset(58);
-        make.right.equalTo(self.shareBtn.mas_left).with.offset(-10);
-        make.center.equalTo(player.topView);
-        make.top.equalTo(player.topView).with.offset(0);
-
     }];
     if (player.loadingView.animating) {
         [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1709,7 +1682,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
    [fatherView addSubview:player];
     player.fullScreenBtn.selected = YES;
     [player bringSubviewToFront:player.bottomView];
-
+    [self ht_reloadPlayerWith:YES];
 }
 /**
  *  小屏幕显示播放
@@ -1717,13 +1690,11 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  ＊ @param fatherView 当前父视图
  ＊ @param playerFrame 小屏幕的Frame
  **/
--(void)showSmallScreenWithPlayer:(KYVedioPlayer *)player withFatherView:(UIView *)fatherView withFrame:(CGRect )playerFrame{
+- (void)showSmallScreenWithPlayer:(KYVedioPlayer *)player withFatherView:(UIView *)fatherView withFrame:(CGRect )playerFrame{
 
     [player removeFromSuperview];
     [UIView animateWithDuration:0.5f animations:^{
-//        player.transform = CGAffineTransformIdentity;
         player.frame =CGRectMake(playerFrame.origin.x, playerFrame.origin.y, playerFrame.size.width, playerFrame.size.height);
-//        player.frame =CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, playerFrame.size.height);
         player.playerLayer.frame =  player.bounds;
         [fatherView addSubview:player];
         
@@ -1733,7 +1704,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.height.mas_equalTo(40);
             make.bottom.equalTo(player).with.offset(0);
         }];
-
 
         [player.topView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(player).with.offset(0);
@@ -1745,17 +1715,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
         [player.closeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(player.topView).with.offset(5);
-//            make.height.mas_equalTo(40);
             make.top.bottom.equalTo(player.topView);
             make.width.mas_equalTo(30);
-        }];
-
-
-        [player.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(player.topView).with.offset(45);
-            make.right.equalTo(player.topView).with.offset(-45);
-            make.center.equalTo(player.topView);
-            make.top.equalTo(player.topView).with.offset(0);
         }];
         if (player.loadingView.animating) {
             [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1768,10 +1729,10 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.height.equalTo(@30);
         }];
 
-    }completion:^(BOOL finished) {
+    } completion:^(BOOL finished) {
         player.isFullscreen = NO;
         player.fullScreenBtn.selected = NO;
-
+        [self ht_reloadPlayerWith:NO];
     }];
 }
 
