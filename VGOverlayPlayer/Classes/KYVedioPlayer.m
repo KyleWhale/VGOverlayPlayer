@@ -880,7 +880,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     }
 }
 
-- (void)ht_reloadPlayerWith:(BOOL)isFullscreen {
+- (void)reloadPlayerWith:(BOOL)isFullscreen {
     if (isFullscreen) {
         //全屏显示
         self.bottomView.alpha = 0.0;
@@ -1682,7 +1682,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
    [fatherView addSubview:player];
     player.fullScreenBtn.selected = YES;
     [player bringSubviewToFront:player.bottomView];
-    [self ht_reloadPlayerWith:YES];
+    [self reloadPlayerWith:YES];
 }
 /**
  *  小屏幕显示播放
@@ -1732,7 +1732,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     } completion:^(BOOL finished) {
         player.isFullscreen = NO;
         player.fullScreenBtn.selected = NO;
-        [self ht_reloadPlayerWith:NO];
+        [self reloadPlayerWith:NO];
     }];
 }
 

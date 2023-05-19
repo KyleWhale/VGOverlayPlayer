@@ -235,7 +235,7 @@ typedef NS_ENUM(NSInteger, CloseBtnStyle){
 
 - (void)colseTheVideo:(UIButton *)sender;
 - (void)fullScreenAction:(UIButton *)sender;
-- (void)ht_reloadPlayerWith:(BOOL)isFullscreen;
+- (void)reloadPlayerWith:(BOOL)isFullscreen;
 
 @end
 
