@@ -11,12 +11,7 @@
 #define kHalfWidth self.frame.size.width * 0.5
 #define kHalfHeight self.frame.size.height * 0.5
 
-#define MYBUNDLE_NAME @"KYVedioPlayer.bundle"
-
-#define MYBUNDLE_PATH [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:MYBUNDLE_NAME]
-
-#define MYBUNDLE [NSBundle bundleWithPath: MYBUNDLE_PATH]
-
+#define MYBUNDLE [NSBundle bundleForClass:[self class]]
 
 static void *PlayViewCMTimeValue = &PlayViewCMTimeValue;
 
@@ -82,6 +77,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     }
     return self;
 }
+
 /**
  *  初始化KYVedioPlayer的控件，添加手势，添加通知，添加kvo等
  */
@@ -123,15 +119,15 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     self.playOrPauseBtn.showsTouchWhenHighlighted = YES;
     [self.playOrPauseBtn addTarget:self action:@selector(PlayOrPause:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.playOrPauseBtn setImage:[UIImage imageNamed:@"video_pause_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [self.playOrPauseBtn setImage:[UIImage imageNamed:@"video_play_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [self.playOrPauseBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_pause_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [self.playOrPauseBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
 
     [self.bottomView addSubview:self.playOrPauseBtn];
     
     self.nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.nextBtn.showsTouchWhenHighlighted = YES;
     [self.nextBtn addTarget:self action:@selector(nextClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.nextBtn setImage:[UIImage imageNamed:@"video_tap_next" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [self.nextBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_tap_next" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     self.nextBtn.hidden = YES;
     [self.bottomView addSubview:self.nextBtn];
     
@@ -174,7 +170,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     //进度条
     self.progressSlider = [[UISlider alloc]init];
     self.progressSlider.minimumValue = 0.0;
-    [self.progressSlider setThumbImage:[UIImage imageNamed:@"ic_dot" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] ?: [UIImage imageNamed:@"ic_dot" inBundle:MYBUNDLE compatibleWithTraitCollection:nil]  forState:UIControlStateNormal];
+    [self.progressSlider setThumbImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/ic_dot" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] ?: [UIImage imageNamed:@"KYVedioPlayer.bundle/ic_dot" inBundle:MYBUNDLE compatibleWithTraitCollection:nil]  forState:UIControlStateNormal];
     self.progressSlider.maximumTrackTintColor = [UIColor clearColor];
     self.progressSlider.value = 0.0;//指定初始值
     //进度条的拖拽事件
@@ -199,7 +195,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     self.fullScreenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.fullScreenBtn.showsTouchWhenHighlighted = YES;
     [self.fullScreenBtn addTarget:self action:@selector(fullScreenAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.fullScreenBtn setImage:[UIImage imageNamed:@"video_play_full" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [self.fullScreenBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_full" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self.bottomView addSubview:self.fullScreenBtn];
 
     //左边时间
@@ -223,27 +219,27 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _closeBtn.showsTouchWhenHighlighted = YES;
     [_closeBtn addTarget:self action:@selector(colseTheVideo:) forControlEvents:UIControlEventTouchUpInside];
-    [_closeBtn setImage:[UIImage imageNamed:@"other_white_back" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_closeBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/other_white_back" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self.topView addSubview:_closeBtn];
     
     //分享按钮
     _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _shareBtn.showsTouchWhenHighlighted = YES;
-    [_shareBtn setImage:[UIImage imageNamed:@"video_share" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_shareBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_share" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     
     [_shareBtn addTarget:self action:@selector(onClickShareBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:_shareBtn];
     
     _subtitleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _subtitleBtn.showsTouchWhenHighlighted = YES;
-    [_subtitleBtn setImage:[UIImage imageNamed:@"video_play_subtitle" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_subtitleBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_subtitle" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [_subtitleBtn addTarget:self action:@selector(onSubtitleClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:_subtitleBtn];
     
     _collectionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _collectionBtn.showsTouchWhenHighlighted = YES;
-    [_collectionBtn setImage:[UIImage imageNamed:@"video_white_collection" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_collectionBtn setImage:[UIImage imageNamed:@"video_collection_show" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_collectionBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_white_collection" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_collectionBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_collection_show" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_collectionBtn addTarget:self action:@selector(onCollectionClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:_collectionBtn];
 
@@ -262,8 +258,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     
     _lockBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _lockBtn.showsTouchWhenHighlighted = YES;
-    [_lockBtn setImage:[UIImage imageNamed:@"video_show_unlock" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_lockBtn setImage:[UIImage imageNamed:@"video_show_lock" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_lockBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_show_unlock" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_lockBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_show_lock" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_lockBtn addTarget:self action:@selector(onUnlockClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.showView addSubview:_lockBtn];
     
@@ -275,20 +271,20 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     
     _showPlayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _showPlayBtn.showsTouchWhenHighlighted = YES;
-    [_showPlayBtn setImage:[UIImage imageNamed:@"video_show_plause" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_showPlayBtn setImage:[UIImage imageNamed:@"video_play_pause" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_showPlayBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_show_plause" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_showPlayBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_pause" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_showPlayBtn addTarget:self action:@selector(PlayOrPause:) forControlEvents:UIControlEventTouchUpInside];
     [self.showView addSubview:_showPlayBtn];
     
     _advanceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _advanceBtn.showsTouchWhenHighlighted = YES;
-    [_advanceBtn setImage:[UIImage imageNamed:@"video_play_advance" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_advanceBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_advance" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [_advanceBtn addTarget:self action:@selector(advanceClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.showView addSubview:_advanceBtn];
     
     _retreatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _retreatBtn.showsTouchWhenHighlighted = YES;
-    [_retreatBtn setImage:[UIImage imageNamed:@"video_play_retreat" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_retreatBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_retreat" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [_retreatBtn addTarget:self action:@selector(retreatClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.showView addSubview:_retreatBtn];
     
@@ -297,7 +293,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self addSubview:self.playShowView];
     
     self.showImageView = [[UIImageView alloc]init];
-    self.showImageView.image = [UIImage imageNamed:@"video_advance_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
+    self.showImageView.image = [UIImage imageNamed:@"KYVedioPlayer.bundle/video_advance_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
     [self.playShowView addSubview:self.showImageView];
     
     self.showTimeLabel = [[UILabel alloc]init];
@@ -889,7 +885,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         self.showView.alpha = 0.0;
         self.nextBtn.hidden = NO;
         self.titleLabel.hidden = NO;
-        [self.fullScreenBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        [self.fullScreenBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/"] forState:UIControlStateNormal];
         self.fullScreenBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
         [self.fullScreenBtn setTitle:@"Episode" forState:UIControlStateNormal];
         [self.topView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -953,7 +949,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         }];
     } else {
         self.showView.alpha = 0.0;
-        [self.fullScreenBtn setImage:[UIImage imageNamed:@"video_play_full" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [self.fullScreenBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_full" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self.fullScreenBtn setTitle:@"" forState:UIControlStateNormal];
         self.nextBtn.hidden = YES;
         self.titleLabel.hidden = YES;
@@ -1582,9 +1578,9 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             self.playShowView.hidden = NO;
             self.showTimeLabel.text = [NSString stringWithFormat:@"%@/%@",self.leftTimeLabel.text,self.rightTimeLabel.text];
             if (self.firstPoint.x - self.secondPoint.x>0) {
-                self.showImageView.image = [UIImage imageNamed:@"video_retreat_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
+                self.showImageView.image = [UIImage imageNamed:@"KYVedioPlayer.bundle/video_retreat_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
             } else {
-                self.showImageView.image = [UIImage imageNamed:@"video_advance_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
+                self.showImageView.image = [UIImage imageNamed:@"KYVedioPlayer.bundle/video_advance_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
             }
         }
         
