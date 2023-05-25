@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "VGOverlayPlayer"
-  spec.version      = "0.0.4"
+  spec.version      = "0.0.6"
   spec.summary      = "VGOverlayPlayer."
 
   # This description is used to generate tags and improve search results.
@@ -105,7 +105,7 @@ Pod::Spec.new do |spec|
   #
 
   # spec.resource  = "VGOverlayPlayer/Classes/KYVedioPlayer.bundle"
-  spec.resource_bundle = {'KYVedioPlayer' => ['VGOverlayPlayer/Classes/KYVedioPlayer.bundle/*.png']}
+  spec.resource_bundle = {'KyCommonCode' => ['VGOverlayPlayer/Classes/KyCommonCode.bundle/*.png']}
   # spec.resources = "Resources/*.png"
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"

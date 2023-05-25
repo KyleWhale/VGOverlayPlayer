@@ -1,9 +1,9 @@
 //
-//  KYVedioPlayer.h
-//  KYVedioPlayer
+//  KyCommonCode.h
+//  KyCommonCode
 //
 //  Created by kingly on 16/9/9.
-//  Copyright © 2016年 https://github.com/kingly09/KYVedioPlayer kingly  inc . All rights reserved.
+//  Copyright © 2016年 https://github.com/kingly09/KyCommonCode kingly  inc . All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 // 播放器的几种状态
-typedef NS_ENUM(NSInteger, KYVedioPlayerState) {
+typedef NS_ENUM(NSInteger, KYCommonCodeState) {
    KYVedioPlayerStateFailed,        // 播放失败
    KYVedioPlayerStateBuffering,     // 缓冲中
    KYVedioPlayerStatusReadyToPlay,  // 将要播放
@@ -36,52 +36,52 @@ typedef NS_ENUM(NSInteger, CloseBtnStyle){
     CloseBtnStyleClose  //关闭（X）
 };
 
-@class KYVedioPlayer;
-@protocol KYVedioPlayerDelegate <NSObject>
+@class KyCommonCode;
+@protocol KyCommonCodeDelegate <NSObject>
 @optional
 ///播放器事件
 //点击播放暂停按钮代理方法
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer clickedPlayOrPauseButton:(UIButton *)playOrPauseBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode clickedPlayOrPauseButton:(UIButton *)ppBtn;
 //点击关闭按钮代理方法
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer clickedCloseButton:(UIButton *)closeBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode clickedCloseButton:(UIButton *)closeBtn;
 //点击分享按钮代理方法
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer isFullscreen:(BOOL)isFullscreen onClickShareBtn:(UIButton *)shareBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickShareBtn:(UIButton *)shareBtn;
 //点击字幕按钮
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer isFullscreen:(BOOL)isFullscreen onClickSubtitleBtn:(UIButton *)subtitleBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickSubtitleBtn:(UIButton *)subtitleBtn;
 //去除广告
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer advertisementBtn:(UIButton *)subtitleBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode advertisementBtn:(UIButton *)subtitleBtn;
 //锁屏
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer lockBtn:(UIButton *)lockBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode lockBtn:(UIButton *)lockBtn;
 //点击收藏按钮代理方法
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer isFullscreen:(BOOL)isFullscreen onClickCollectionBtn:(UIButton *)collectionBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickCollectionBtn:(UIButton *)collectionBtn;
 //点击episode按钮
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer onEpisodeBtn:(UIButton *)collectionBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode onEpisodeBtn:(UIButton *)collectionBtn;
 //点击下一章按钮
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer onNextBtn:(UIButton *)collectionBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode onNextBtn:(UIButton *)collectionBtn;
 //点击全屏按钮代理方法
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer clickedFullScreenButton:(UIButton *)fullScreenBtn;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode clickedFullScreenButton:(UIButton *)fullScreenBtn;
 //单击WMPlayer的代理方法
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer singleTaped:(UITapGestureRecognizer *)singleTap;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode singleTaped:(UITapGestureRecognizer *)singleTap;
 //双击WMPlayer的代理方法
--(void)kyvedioPlayer:(KYVedioPlayer *)kyvedioPlayer doubleTaped:(UITapGestureRecognizer *)doubleTap;
+-(void)KyCommonCode:(KyCommonCode *)KyCommonCode doubleTaped:(UITapGestureRecognizer *)doubleTap;
 
 ///播放状态
 //播放失败的代理方法
--(void)kyvedioPlayerFailedPlay:(KYVedioPlayer *)kyvedioPlayer playerStatus:(KYVedioPlayerState)state;
+-(void)kyFailedAndCommonCode:(KyCommonCode *)KyCommonCode state:(KYCommonCodeState)state;
 //准备播放的代理方法
--(void)kyvedioPlayerReadyToPlay:(KYVedioPlayer *)kyvedioPlayer playerStatus:(KYVedioPlayerState)state;
+-(void)kyReadyAndCommonCode:(KyCommonCode *)KyCommonCode state:(KYCommonCodeState)state;
 //播放完毕的代理方法
--(void)kyplayerFinishedPlay:(KYVedioPlayer *)kyvedioPlayer;
+-(void)finishKyAction:(KyCommonCode *)KyCommonCode;
 
 //监听播放时间
--(void)kyplayerPlayCurrentTime:(KYVedioPlayer *)kyvedioPlayer;
+-(void)kyTimeAndCommonCode:(KyCommonCode *)KyCommonCode;
 //监听触摸时间
--(void)kyplayerPlayTouchClick;
+-(void)kyTouchAndCommonCode;
 
 @end
 
 
-@interface KYVedioPlayer : UIView
+@interface KyCommonCode : UIView
 
 /**
  *  播放器player
@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, CloseBtnStyle){
 @property (nonatomic,retain,nullable) AVPlayerLayer  *playerLayer;
 
 /** 播放器的代理 */
-@property (nonatomic, weak)id <KYVedioPlayerDelegate> delegate;
+@property (nonatomic, weak)id <KyCommonCodeDelegate> delegate;
 /**
  *  底部操作工具栏
  */
@@ -115,7 +115,7 @@ typedef NS_ENUM(NSInteger, CloseBtnStyle){
 @property (nonatomic,strong) UIImageView        *showImageView;
 @property (nonatomic,strong) UILabel        *showTimeLabel;
 /// 是否锁定旋转
-@property (nonatomic, assign) BOOL isLockScreen;
+@property (nonatomic, assign) BOOL codeLock;
 
 /**
  *  顶部操作工具栏
@@ -129,7 +129,7 @@ typedef NS_ENUM(NSInteger, CloseBtnStyle){
 /**
  ＊  播放器状态
  */
-@property (nonatomic, assign) KYVedioPlayerState   state;
+@property (nonatomic, assign) KYCommonCodeState   state;
 /**
  ＊  播放器左上角按钮的类型
  */
@@ -153,7 +153,7 @@ typedef NS_ENUM(NSInteger, CloseBtnStyle){
 /**
  *  播放暂停按钮
  */
-@property (nonatomic,retain,nullable) UIButton       *playOrPauseBtn;
+@property (nonatomic,retain,nullable) UIButton       *ppBtn;
 /**
  *  左上角关闭按钮
  */
@@ -217,25 +217,25 @@ typedef NS_ENUM(NSInteger, CloseBtnStyle){
 /**
  * 重置播放器
  */
-- (void)resetKYVedioPlayer;
+- (void)resetKyAction;
 /**
  *  全屏显示播放
  ＊ @param interfaceOrientation 方向
  ＊ @param player 当前播放器
  ＊ @param fatherView 当前父视图
  **/
--(void)showFullScreenWithInterfaceOrientation:(UIInterfaceOrientation )interfaceOrientation player:(KYVedioPlayer *)player withFatherView:(UIView *)fatherView;
+-(void)showFullScreenWithInterfaceOrientation:(UIInterfaceOrientation )interfaceOrientation player:(KyCommonCode *)player withFatherView:(UIView *)fatherView;
 /**
  *  小屏幕显示播放
  ＊ @param player 当前播放器
  ＊ @param fatherView 当前父视图
  ＊ @param playerFrame 小屏幕的Frame
  **/
--(void)showSmallScreenWithPlayer:(KYVedioPlayer *)player withFatherView:(UIView *)fatherView withFrame:(CGRect )playerFrame;
+-(void)showLittleKyCommonCode:(KyCommonCode *)player withFatherView:(UIView *)fatherView withFrame:(CGRect )playerFrame;
 
-- (void)colseTheVideo:(UIButton *)sender;
+- (void)closeKyAction:(UIButton *)sender;
 - (void)fullScreenAction:(UIButton *)sender;
-- (void)reloadPlayerWith:(BOOL)isFullscreen;
+- (void)reloadKyCommonCode:(BOOL)isFullscreen;
 
 @end
 

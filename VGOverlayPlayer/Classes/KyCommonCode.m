@@ -1,12 +1,12 @@
 //
-//  KYVedioPlayer.m
-//  KYVedioPlayer
+//  KyCommonCode.m
+//  KyCommonCode
 //
 //  Created by kingly on 16/9/9.
-//  Copyright © 2016年 https://github.com/kingly09/KYVedioPlayer kingly  inc . All rights reserved.
+//  Copyright © 2016年 https://github.com/kingly09/KyCommonCode kingly  inc . All rights reserved.
 //
 
-#import "KYVedioPlayer.h"
+#import "KyCommonCode.h"
 
 #define kHalfWidth self.frame.size.width * 0.5
 #define kHalfHeight self.frame.size.height * 0.5
@@ -17,7 +17,7 @@ static void *PlayViewCMTimeValue = &PlayViewCMTimeValue;
 
 static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContext;
 
-@interface KYVedioPlayer () <UIGestureRecognizerDelegate>
+@interface KyCommonCode () <UIGestureRecognizerDelegate>
 @property (nonatomic,assign)CGPoint firstPoint;
 @property (nonatomic,assign)CGPoint secondPoint;
 @property (nonatomic, strong)NSDateFormatter *dateFormatter;
@@ -47,7 +47,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
 @end
 
-@implementation KYVedioPlayer
+@implementation KyCommonCode
 
 @synthesize isPlaying;
 
@@ -79,7 +79,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 }
 
 /**
- *  初始化KYVedioPlayer的控件，添加手势，添加通知，添加kvo等
+ *  初始化KyCommonCode的控件，添加手势，添加通知，添加kvo等
  */
 -(void)initPlayer{
 
@@ -115,19 +115,19 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self.bottomView.layer addSublayer:self.bottomLayer];
 
     //添加暂停和开启按钮
-    self.playOrPauseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.playOrPauseBtn.showsTouchWhenHighlighted = YES;
-    [self.playOrPauseBtn addTarget:self action:@selector(PlayOrPause:) forControlEvents:UIControlEventTouchUpInside];
+    self.ppBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.ppBtn.showsTouchWhenHighlighted = YES;
+    [self.ppBtn addTarget:self action:@selector(PlayOrPause:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.playOrPauseBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_pause_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [self.playOrPauseBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [self.ppBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_pause_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [self.ppBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_play_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
 
-    [self.bottomView addSubview:self.playOrPauseBtn];
+    [self.bottomView addSubview:self.ppBtn];
     
     self.nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.nextBtn.showsTouchWhenHighlighted = YES;
     [self.nextBtn addTarget:self action:@selector(nextClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.nextBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_tap_next" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [self.nextBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_tap_next" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     self.nextBtn.hidden = YES;
     [self.bottomView addSubview:self.nextBtn];
     
@@ -170,7 +170,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     //进度条
     self.progressSlider = [[UISlider alloc]init];
     self.progressSlider.minimumValue = 0.0;
-    [self.progressSlider setThumbImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/ic_dot" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] ?: [UIImage imageNamed:@"KYVedioPlayer.bundle/ic_dot" inBundle:MYBUNDLE compatibleWithTraitCollection:nil]  forState:UIControlStateNormal];
+    [self.progressSlider setThumbImage:[UIImage imageNamed:@"KyCommonCode.bundle/ic_dot" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] ?: [UIImage imageNamed:@"KyCommonCode.bundle/ic_dot" inBundle:MYBUNDLE compatibleWithTraitCollection:nil]  forState:UIControlStateNormal];
     self.progressSlider.maximumTrackTintColor = [UIColor clearColor];
     self.progressSlider.value = 0.0;//指定初始值
     //进度条的拖拽事件
@@ -195,7 +195,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     self.fullScreenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.fullScreenBtn.showsTouchWhenHighlighted = YES;
     [self.fullScreenBtn addTarget:self action:@selector(fullScreenAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.fullScreenBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_full" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [self.fullScreenBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_play_full" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self.bottomView addSubview:self.fullScreenBtn];
 
     //左边时间
@@ -218,28 +218,28 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     //关闭按钮
     _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _closeBtn.showsTouchWhenHighlighted = YES;
-    [_closeBtn addTarget:self action:@selector(colseTheVideo:) forControlEvents:UIControlEventTouchUpInside];
-    [_closeBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/other_white_back" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_closeBtn addTarget:self action:@selector(closeKyAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_closeBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/other_white_back" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self.topView addSubview:_closeBtn];
     
     //分享按钮
     _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _shareBtn.showsTouchWhenHighlighted = YES;
-    [_shareBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_share" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_shareBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_share" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     
     [_shareBtn addTarget:self action:@selector(onClickShareBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:_shareBtn];
     
     _subtitleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _subtitleBtn.showsTouchWhenHighlighted = YES;
-    [_subtitleBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_subtitle" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_subtitleBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_play_subtitle" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [_subtitleBtn addTarget:self action:@selector(onSubtitleClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:_subtitleBtn];
     
     _collectionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _collectionBtn.showsTouchWhenHighlighted = YES;
-    [_collectionBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_white_collection" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_collectionBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_collection_show" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_collectionBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_white_collection" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_collectionBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_collection_show" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_collectionBtn addTarget:self action:@selector(onCollectionClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:_collectionBtn];
 
@@ -258,8 +258,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     
     _lockBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _lockBtn.showsTouchWhenHighlighted = YES;
-    [_lockBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_show_unlock" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_lockBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_show_lock" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_lockBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_show_unlock" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_lockBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_show_lock" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_lockBtn addTarget:self action:@selector(onUnlockClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.showView addSubview:_lockBtn];
     
@@ -271,20 +271,20 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     
     _showPlayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _showPlayBtn.showsTouchWhenHighlighted = YES;
-    [_showPlayBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_show_plause" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_showPlayBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_pause" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_showPlayBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_show_plause" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_showPlayBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_play_pause" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_showPlayBtn addTarget:self action:@selector(PlayOrPause:) forControlEvents:UIControlEventTouchUpInside];
     [self.showView addSubview:_showPlayBtn];
     
     _advanceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _advanceBtn.showsTouchWhenHighlighted = YES;
-    [_advanceBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_advance" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_advanceBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_play_advance" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [_advanceBtn addTarget:self action:@selector(advanceClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.showView addSubview:_advanceBtn];
     
     _retreatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _retreatBtn.showsTouchWhenHighlighted = YES;
-    [_retreatBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_retreat" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_retreatBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_play_retreat" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [_retreatBtn addTarget:self action:@selector(retreatClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.showView addSubview:_retreatBtn];
     
@@ -293,7 +293,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self addSubview:self.playShowView];
     
     self.showImageView = [[UIImageView alloc]init];
-    self.showImageView.image = [UIImage imageNamed:@"KYVedioPlayer.bundle/video_advance_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
+    self.showImageView.image = [UIImage imageNamed:@"KyCommonCode.bundle/video_advance_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
     [self.playShowView addSubview:self.showImageView];
     
     self.showTimeLabel = [[UILabel alloc]init];
@@ -352,7 +352,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     }];
     [self.loadingView startAnimating];
 
-    [self.playOrPauseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.ppBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bottomView).with.offset(0);
         make.height.mas_equalTo(40);
         make.bottom.equalTo(self.bottomView).with.offset(0);
@@ -401,13 +401,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
     [self.leftTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bottomView).with.offset(40);
-        make.centerY.equalTo(self.playOrPauseBtn);
+        make.centerY.equalTo(self.ppBtn);
         make.width.mas_offset(35);
     }];
 
     [self.rightTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.bottomView).with.offset(-40);
-        make.centerY.equalTo(self.playOrPauseBtn);
+        make.centerY.equalTo(self.ppBtn);
         make.width.mas_offset(35);
     }];
 
@@ -496,8 +496,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         make.top.equalTo(self.showImageView.mas_bottom).offset(6);
     }];
     [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.playOrPauseBtn);
-        make.left.equalTo(self.playOrPauseBtn.mas_right).offset(6);
+        make.centerY.equalTo(self.ppBtn);
+        make.left.equalTo(self.ppBtn.mas_right).offset(6);
         make.height.width.mas_offset(40);
     }];
 
@@ -509,7 +509,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 /**
  * 重置播放器
  */
-- (void)resetKYVedioPlayer{
+- (void)resetKyAction{
 
     self.currentItem = nil;
     self.seekTime = 0;
@@ -537,14 +537,14 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 {
     if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
         if (((UITapGestureRecognizer*)gestureRecognizer).numberOfTapsRequired == 2) {
-            if (self.isLockScreen == YES)
+            if (self.codeLock == YES)
                 return NO;
         }
         return YES;
     }
 
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        if (self.isLockScreen) { return NO; }
+        if (self.codeLock) { return NO; }
         return YES;
     }
     
@@ -554,7 +554,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
 -(void)dealloc{
 
-    NSLog(@"KYVedioPlayer dealloc");
+    NSLog(@"KyCommonCode dealloc");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.player.currentItem cancelPendingSeeks];
     [self.player.currentItem.asset cancelLoading];
@@ -573,7 +573,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self.player replaceCurrentItemWithPlayerItem:nil];
     self.player = nil;
     self.currentItem = nil;
-    self.playOrPauseBtn = nil;
+    self.ppBtn = nil;
     self.playerLayer = nil;
 
     self.autoDismissTimer = nil;
@@ -682,9 +682,9 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
 /**
  *  设置播放的状态
- *  @param state KYVedioPlayerState
+ *  @param state KYCommonCodeState
  */
-- (void)setState:(KYVedioPlayerState )state
+- (void)setState:(KYCommonCodeState )state
 {
     _state = state;
     // 控制菊花显示、隐藏
@@ -751,7 +751,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 #pragma mark - 播放 或者 暂停
 - (void)PlayOrPause:(UIButton *)sender{
 //    if (self.player.rate != 1.f) {
-    if (self.playOrPauseBtn.selected) {
+    if (self.ppBtn.selected) {
         if ([self currentTime] == [self duration])
             [self setCurrentTime:0.f];
         sender.selected = NO;
@@ -761,37 +761,37 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         [self.player pause];
     }
     self.showPlayBtn.selected = sender.selected;
-    self.playOrPauseBtn.selected = sender.selected;
-    if ([self.delegate respondsToSelector:@selector(kyvedioPlayer:clickedPlayOrPauseButton:)]) {
-        [self.delegate kyvedioPlayer:self clickedPlayOrPauseButton:sender];
+    self.ppBtn.selected = sender.selected;
+    if ([self.delegate respondsToSelector:@selector(KyCommonCode:clickedPlayOrPauseButton:)]) {
+        [self.delegate KyCommonCode:self clickedPlayOrPauseButton:sender];
     }
 }
 
 -(void)nextClick:(UIButton *)sender{
-    if ([self.delegate respondsToSelector:@selector(kyvedioPlayer:onNextBtn:)]) {
-        [self.delegate kyvedioPlayer:self onNextBtn:sender];
+    if ([self.delegate respondsToSelector:@selector(KyCommonCode:onNextBtn:)]) {
+        [self.delegate KyCommonCode:self onNextBtn:sender];
     }
 }
 
 //锁屏
 - (void)onUnlockClick:(UIButton*)sender {
     sender.selected = !sender.selected;
-    self.isLockScreen = sender.selected;
-    self.topView.hidden    = self.isLockScreen;
-    self.bottomView.hidden = self.isLockScreen;
-    self.adBtn.hidden = self.isLockScreen;
-    self.retreatBtn.hidden = self.isLockScreen;
-    self.advanceBtn.hidden = self.isLockScreen;
-    self.showPlayBtn.hidden = self.isLockScreen;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayer:lockBtn:)]) {
-        [self.delegate kyvedioPlayer:self lockBtn:sender];
+    self.codeLock = sender.selected;
+    self.topView.hidden    = self.codeLock;
+    self.bottomView.hidden = self.codeLock;
+    self.adBtn.hidden = self.codeLock;
+    self.retreatBtn.hidden = self.codeLock;
+    self.advanceBtn.hidden = self.codeLock;
+    self.showPlayBtn.hidden = self.codeLock;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(KyCommonCode:lockBtn:)]) {
+        [self.delegate KyCommonCode:self lockBtn:sender];
     }
 }
 
 //去除广告
 -(void)adClick:(UIButton*)sender{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayer:advertisementBtn:)]) {
-        [self.delegate kyvedioPlayer:self advertisementBtn:sender];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(KyCommonCode:advertisementBtn:)]) {
+        [self.delegate KyCommonCode:self advertisementBtn:sender];
     }
 }
 
@@ -842,7 +842,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         if ([self currentTime] == [self duration])
             [self setCurrentTime:0.f];
         self.showPlayBtn.selected = NO;
-        self.playOrPauseBtn.selected = NO;
+        self.ppBtn.selected = NO;
         [self.player play];
     }
 }
@@ -853,16 +853,16 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  **/
 -(void)fullScreenAction:(UIButton *)sender{
     if (sender.isSelected) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayer:onEpisodeBtn:)]) {
-          [self.delegate kyvedioPlayer:self onEpisodeBtn:sender];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(KyCommonCode:onEpisodeBtn:)]) {
+          [self.delegate KyCommonCode:self onEpisodeBtn:sender];
         }
         return;
     }
     sender.selected = !sender.selected;
     
 
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(kyvedioPlayer:clickedFullScreenButton:)]) {
-        [self.delegate kyvedioPlayer:self clickedFullScreenButton:sender];
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(KyCommonCode:clickedFullScreenButton:)]) {
+        [self.delegate KyCommonCode:self clickedFullScreenButton:sender];
     }
 }
 
@@ -870,13 +870,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 /**
  *   点击关闭按钮
  **/
--(void)colseTheVideo:(UIButton *)sender{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayer:clickedCloseButton:)]) {
-        [self.delegate kyvedioPlayer:self clickedCloseButton:sender];
+-(void)closeKyAction:(UIButton *)sender{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(KyCommonCode:clickedCloseButton:)]) {
+        [self.delegate KyCommonCode:self clickedCloseButton:sender];
     }
 }
 
-- (void)reloadPlayerWith:(BOOL)isFullscreen {
+- (void)reloadKyCommonCode:(BOOL)isFullscreen {
     if (isFullscreen) {
         //全屏显示
         self.bottomView.alpha = 0.0;
@@ -885,7 +885,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         self.showView.alpha = 0.0;
         self.nextBtn.hidden = NO;
         self.titleLabel.hidden = NO;
-        [self.fullScreenBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/"] forState:UIControlStateNormal];
+        [self.fullScreenBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/"] forState:UIControlStateNormal];
         self.fullScreenBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
         [self.fullScreenBtn setTitle:@"Episode" forState:UIControlStateNormal];
         [self.topView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -922,7 +922,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.bottom.equalTo(self).with.offset(0);
         }];
         
-        [self.playOrPauseBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+        [self.ppBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.bottomView).with.offset(30);
             make.height.mas_equalTo(40);
             make.bottom.equalTo(self.bottomView).with.offset(-16);
@@ -931,13 +931,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         
         [self.leftTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.bottomView).with.offset(40);
-            make.bottom.equalTo(self.playOrPauseBtn.mas_top).with.offset(-12);
+            make.bottom.equalTo(self.ppBtn.mas_top).with.offset(-12);
             make.width.mas_equalTo(35);
         }];
         
         [self.rightTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView).with.offset(-40);
-            make.bottom.equalTo(self.playOrPauseBtn.mas_top).with.offset(-12);
+            make.bottom.equalTo(self.ppBtn.mas_top).with.offset(-12);
             make.width.mas_equalTo(35);
         }];
         
@@ -945,11 +945,11 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.right.equalTo(self.bottomView).with.offset(-30);
             make.height.mas_equalTo(40);
             make.width.mas_equalTo([self screenFit:60]);
-            make.centerY.equalTo(self.playOrPauseBtn);
+            make.centerY.equalTo(self.ppBtn);
         }];
     } else {
         self.showView.alpha = 0.0;
-        [self.fullScreenBtn setImage:[UIImage imageNamed:@"KYVedioPlayer.bundle/video_play_full" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [self.fullScreenBtn setImage:[UIImage imageNamed:@"KyCommonCode.bundle/video_play_full" inBundle:MYBUNDLE compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [self.fullScreenBtn setTitle:@"" forState:UIControlStateNormal];
         self.nextBtn.hidden = YES;
         self.titleLabel.hidden = YES;
@@ -985,7 +985,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             make.bottom.equalTo(self).with.offset(0);
         }];
         
-        [self.playOrPauseBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+        [self.ppBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.bottomView).with.offset(0);
             make.height.mas_equalTo(40);
             make.bottom.equalTo(self.bottomView).with.offset(0);
@@ -994,13 +994,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         
         [self.leftTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.bottomView).with.offset(40);
-            make.centerY.equalTo(self.playOrPauseBtn);
+            make.centerY.equalTo(self.ppBtn);
             make.width.mas_offset(35);
         }];
 
         [self.rightTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView).with.offset(-40);
-            make.centerY.equalTo(self.playOrPauseBtn);
+            make.centerY.equalTo(self.ppBtn);
             make.width.mas_offset(35);
         }];
         [self.fullScreenBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -1018,28 +1018,28 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
  */
 -(void)onClickShareBtn:(UIButton *)sender{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayer:isFullscreen:onClickShareBtn:)]) {
-      [self.delegate kyvedioPlayer:self isFullscreen:self.isFullscreen onClickShareBtn:sender];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(KyCommonCode:isFullscreen:onClickShareBtn:)]) {
+      [self.delegate KyCommonCode:self isFullscreen:self.isFullscreen onClickShareBtn:sender];
     }
 }
 
 -(void)onSubtitleClick:(UIButton *)sender{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayer:isFullscreen:onClickSubtitleBtn:)]) {
-      [self.delegate kyvedioPlayer:self isFullscreen:self.isFullscreen onClickSubtitleBtn:sender];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(KyCommonCode:isFullscreen:onClickSubtitleBtn:)]) {
+      [self.delegate KyCommonCode:self isFullscreen:self.isFullscreen onClickSubtitleBtn:sender];
     }
 }
 
 -(void)onCollectionClick:(UIButton *)sender{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayer:isFullscreen:onClickCollectionBtn:)]) {
-      [self.delegate kyvedioPlayer:self isFullscreen:self.isFullscreen onClickCollectionBtn:sender];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(KyCommonCode:isFullscreen:onClickCollectionBtn:)]) {
+      [self.delegate KyCommonCode:self isFullscreen:self.isFullscreen onClickCollectionBtn:sender];
     }
 }
 
 #pragma mark - 单击播放器 手势方法
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender{
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autoDismissBottomView:) object:nil];
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(kyvedioPlayer:singleTaped:)]) {
-        [self.delegate kyvedioPlayer:self singleTaped:sender];
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(KyCommonCode:singleTaped:)]) {
+        [self.delegate KyCommonCode:self singleTaped:sender];
     }
     if (_isAutoDismissBottomView == YES) {  //每5秒 自动隐藏底部视图
         if ([self.autoDismissTimer isValid]) {
@@ -1092,19 +1092,19 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 }
 #pragma mark - 双击播放器 手势方法
 - (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTap{
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(kyvedioPlayer:doubleTaped:)]) {
-        [self.delegate kyvedioPlayer:self doubleTaped:doubleTap];
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(KyCommonCode:doubleTaped:)]) {
+        [self.delegate KyCommonCode:self doubleTaped:doubleTap];
     }
     if (self.player.rate != 1.f) {
         if ([self currentTime] == self.duration)
             [self setCurrentTime:0.f];
         [self.player play];
         self.showPlayBtn.selected = NO;
-        self.playOrPauseBtn.selected = NO;
+        self.ppBtn.selected = NO;
     } else {
         [self.player pause];
         self.showPlayBtn.selected = YES;
-        self.playOrPauseBtn.selected = YES;
+        self.ppBtn.selected = YES;
     }
     [UIView animateWithDuration:0.5 animations:^{
         self.bottomView.alpha = 1.0;
@@ -1124,14 +1124,14 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  **/
 - (void)moviePlayDidEnd:(NSNotification *)notification {
     self.state            = KYVedioPlayerStateFinished;
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(kyplayerFinishedPlay:)]) {
-        [self.delegate kyplayerFinishedPlay:self];
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(finishKyAction:)]) {
+        [self.delegate finishKyAction:self];
     }
     
     [self.player seekToTime:kCMTimeZero completionHandler:^(BOOL finished) {
         [self.progressSlider setValue:0.0 animated:YES];
         self.showPlayBtn.selected = YES;
-        self.playOrPauseBtn.selected = YES;
+        self.ppBtn.selected = YES;
     }];
     [UIView animateWithDuration:0.5 animations:^{
         self.bottomView.alpha = 1.0;
@@ -1155,7 +1155,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  **/
 - (void)appDidEnterBackground:(NSNotification*)note
 {
-    if (self.playOrPauseBtn.isSelected==NO) {//如果是播放中，则继续播放
+    if (self.ppBtn.isSelected==NO) {//如果是播放中，则继续播放
         NSArray *tracks = [self.currentItem tracks];
         for (AVPlayerItemTrack *playerItemTrack in tracks) {
             if ([playerItemTrack.assetTrack hasMediaCharacteristic:AVMediaCharacteristicVisual]) {
@@ -1174,7 +1174,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  **/
 - (void)appWillEnterForeground:(NSNotification*)note
 {
-    if (self.playOrPauseBtn.isSelected==NO) {//如果是播放中，则继续播放
+    if (self.ppBtn.isSelected==NO) {//如果是播放中，则继续播放
         NSArray *tracks = [self.currentItem tracks];
         for (AVPlayerItemTrack *playerItemTrack in tracks) {
             if ([playerItemTrack.assetTrack hasMediaCharacteristic:AVMediaCharacteristicVisual]) {
@@ -1198,15 +1198,15 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  *  播放
  */
 - (void)play{
-    if (!self.playOrPauseBtn.selected) {
+    if (!self.ppBtn.selected) {
         return;
     }
-    [self autoPlayOrPause:self.playOrPauseBtn];
+    [self autoPlayOrPause:self.ppBtn];
 }
 
 - (void)autoPlayOrPause:(UIButton *)sender {
 //    if (self.player.rate != 1.f) {
-    if (self.playOrPauseBtn.selected) {
+    if (self.ppBtn.selected) {
         if ([self currentTime] == [self duration])
             [self setCurrentTime:0.f];
         sender.selected = NO;
@@ -1216,17 +1216,17 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         [self.player pause];
     }
     self.showPlayBtn.selected = sender.selected;
-    self.playOrPauseBtn.selected = sender.selected;
+    self.ppBtn.selected = sender.selected;
 }
 
 /**
  * 暂停
  */
 - (void)pause{
-    if (self.playOrPauseBtn.selected) {
+    if (self.ppBtn.selected) {
         return;
     }
-     [self autoPlayOrPause:self.playOrPauseBtn];
+     [self autoPlayOrPause:self.ppBtn];
 }
 /**
  * 是否正在播放中
@@ -1299,8 +1299,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
                         }
                     }
 
-                    if (self.delegate && [self.delegate respondsToSelector:@selector(kyvedioPlayerReadyToPlay:playerStatus:)]) {
-                        [self.delegate kyvedioPlayerReadyToPlay:self playerStatus:KYVedioPlayerStatusReadyToPlay];
+                    if (self.delegate && [self.delegate respondsToSelector:@selector(kyReadyAndCommonCode:state:)]) {
+                        [self.delegate kyReadyAndCommonCode:self state:KYVedioPlayerStatusReadyToPlay];
                     }
                     [self.loadingView stopAnimating];
                     self.loadFailedLabel.hidden = YES;
@@ -1315,8 +1315,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
                 case AVPlayerStatusFailed:
                 {
                     self.state = KYVedioPlayerStateFailed;
-                    if (self.delegate&&[self.delegate respondsToSelector:@selector(kyvedioPlayerFailedPlay:playerStatus:)]) {
-                        [self.delegate kyvedioPlayerFailedPlay:self playerStatus:KYVedioPlayerStateFailed];
+                    if (self.delegate&&[self.delegate respondsToSelector:@selector(kyFailedAndCommonCode:state:)]) {
+                        [self.delegate kyFailedAndCommonCode:self state:KYVedioPlayerStateFailed];
                     }
                     NSError *error = [self.player.currentItem error];
                     if (error) {
@@ -1338,7 +1338,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             self.loadingProgress.progressTintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.7];
             [self.loadingProgress setProgress:timeInterval / totalDuration animated:NO];
         } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) {
-            if (self.playOrPauseBtn.selected) { // 暂停
+            if (self.ppBtn.selected) { // 暂停
                 return;
             }
             [self.loadingView startAnimating];
@@ -1363,7 +1363,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 {
     self.state = KYVedioPlayerStateBuffering;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (self.playOrPauseBtn.selected == NO) {
+        if (self.ppBtn.selected == NO) {
             [self play];
         }
         [self.loadingView stopAnimating];
@@ -1406,8 +1406,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         }else if(self.isDragingSlider==NO){
             [self.progressSlider setValue:(maxValue - minValue) * nowTime / duration + minValue];
         }
-        if (self.delegate&&[self.delegate respondsToSelector:@selector(kyplayerPlayCurrentTime:)]) {
-            [self.delegate kyplayerPlayCurrentTime:self];
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(kyTimeAndCommonCode:)]) {
+            [self.delegate kyTimeAndCommonCode:self];
         }
     }
 }
@@ -1504,7 +1504,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 #pragma mark - UITouch
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    if (self.isLockScreen) {
+    if (self.codeLock) {
         return;
     }
     for(UITouch *touch in event.allTouches) {
@@ -1514,14 +1514,14 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     //记录下第一个点的位置,用于moved方法判断用户是调节音量还是调节视频
     self.originalPoint = self.firstPoint;
     if (self.isFullscreen) {
-        if (self.delegate&&[self.delegate respondsToSelector:@selector(kyplayerPlayTouchClick)]) {
-            [self.delegate kyplayerPlayTouchClick];
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(kyTouchAndCommonCode)]) {
+            [self.delegate kyTouchAndCommonCode];
         }
     }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    if (self.isLockScreen) {
+    if (self.codeLock) {
         return;
     }
     for(UITouch *touch in event.allTouches) {
@@ -1578,9 +1578,9 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             self.playShowView.hidden = NO;
             self.showTimeLabel.text = [NSString stringWithFormat:@"%@/%@",self.leftTimeLabel.text,self.rightTimeLabel.text];
             if (self.firstPoint.x - self.secondPoint.x>0) {
-                self.showImageView.image = [UIImage imageNamed:@"KYVedioPlayer.bundle/video_retreat_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
+                self.showImageView.image = [UIImage imageNamed:@"KyCommonCode.bundle/video_retreat_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
             } else {
-                self.showImageView.image = [UIImage imageNamed:@"KYVedioPlayer.bundle/video_advance_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
+                self.showImageView.image = [UIImage imageNamed:@"KyCommonCode.bundle/video_advance_icon" inBundle:MYBUNDLE compatibleWithTraitCollection:nil];
             }
         }
         
@@ -1594,7 +1594,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             if ([self currentTime] == [self duration])
                 [self setCurrentTime:0.f];
             self.showPlayBtn.selected = NO;
-            self.playOrPauseBtn.selected = NO;
+            self.ppBtn.selected = NO;
             [self.player play];
         }
     }
@@ -1603,7 +1603,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    if (self.isLockScreen) {
+    if (self.codeLock) {
         return;
     }
     self.firstPoint = self.secondPoint = CGPointZero;
@@ -1621,7 +1621,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  ＊ @param player 当前播放器
  ＊ @param fatherView 当前父视图
  **/
-- (void)showFullScreenWithInterfaceOrientation:(UIInterfaceOrientation )interfaceOrientation player:(KYVedioPlayer *)player withFatherView:(UIView *)fatherView{
+- (void)showFullScreenWithInterfaceOrientation:(UIInterfaceOrientation )interfaceOrientation player:(KyCommonCode *)player withFatherView:(UIView *)fatherView{
 
     [player removeFromSuperview];
     if (@available(iOS 16.0, *)) {
@@ -1678,7 +1678,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
    [fatherView addSubview:player];
     player.fullScreenBtn.selected = YES;
     [player bringSubviewToFront:player.bottomView];
-    [self reloadPlayerWith:YES];
+    [self reloadKyCommonCode:YES];
 }
 /**
  *  小屏幕显示播放
@@ -1686,7 +1686,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  ＊ @param fatherView 当前父视图
  ＊ @param playerFrame 小屏幕的Frame
  **/
-- (void)showSmallScreenWithPlayer:(KYVedioPlayer *)player withFatherView:(UIView *)fatherView withFrame:(CGRect )playerFrame{
+- (void)showLittleKyCommonCode:(KyCommonCode *)player withFatherView:(UIView *)fatherView withFrame:(CGRect )playerFrame{
 
     [player removeFromSuperview];
     [UIView animateWithDuration:0.5f animations:^{
@@ -1728,7 +1728,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     } completion:^(BOOL finished) {
         player.isFullscreen = NO;
         player.fullScreenBtn.selected = NO;
-        [self reloadPlayerWith:NO];
+        [self reloadKyCommonCode:NO];
     }];
 }
 

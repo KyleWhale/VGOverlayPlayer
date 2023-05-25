@@ -13,8 +13,8 @@
 		0183C0AE2A1622DE00739DA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0183C0AD2A1622DE00739DA5 /* Assets.xcassets */; };
 		0183C0B12A1622DE00739DA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0183C0AF2A1622DE00739DA5 /* LaunchScreen.storyboard */; };
 		0183C0B42A1622DE00739DA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0183C0B32A1622DE00739DA5 /* main.m */; };
-		0183C0BE2A16233700739DA5 /* KYVedioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0183C0BC2A16233700739DA5 /* KYVedioPlayer.m */; };
-		0183C0BF2A16233700739DA5 /* KYVedioPlayer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0183C0BD2A16233700739DA5 /* KYVedioPlayer.bundle */; };
+		01BAC5372A1F117E00FFD494 /* KyCommonCode.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01BAC5342A1F117E00FFD494 /* KyCommonCode.bundle */; };
+		01BAC5382A1F117E00FFD494 /* KyCommonCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BAC5362A1F117E00FFD494 /* KyCommonCode.m */; };
 		80908B7DA09F9305B42EE348 /* libPods-VGOverlayPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C569D4106B136004B67C3148 /* libPods-VGOverlayPlayer.a */; };
 /* End PBXBuildFile section */
 
@@ -30,9 +30,9 @@
 		0183C0B02A1622DE00739DA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0183C0B22A1622DE00739DA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0183C0B32A1622DE00739DA5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0183C0BB2A16233700739DA5 /* KYVedioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYVedioPlayer.h; sourceTree = "<group>"; };
-		0183C0BC2A16233700739DA5 /* KYVedioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYVedioPlayer.m; sourceTree = "<group>"; };
-		0183C0BD2A16233700739DA5 /* KYVedioPlayer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KYVedioPlayer.bundle; sourceTree = "<group>"; };
+		01BAC5342A1F117E00FFD494 /* KyCommonCode.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KyCommonCode.bundle; sourceTree = "<group>"; };
+		01BAC5352A1F117E00FFD494 /* KyCommonCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KyCommonCode.h; sourceTree = "<group>"; };
+		01BAC5362A1F117E00FFD494 /* KyCommonCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KyCommonCode.m; sourceTree = "<group>"; };
 		31AB10877DBCFF639686D458 /* Pods-VGOverlayPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VGOverlayPlayer.debug.xcconfig"; path = "Target Support Files/Pods-VGOverlayPlayer/Pods-VGOverlayPlayer.debug.xcconfig"; sourceTree = "<group>"; };
 		C569D4106B136004B67C3148 /* libPods-VGOverlayPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VGOverlayPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -87,9 +87,9 @@
 		0183C0BA2A16232000739DA5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0183C0BD2A16233700739DA5 /* KYVedioPlayer.bundle */,
-				0183C0BB2A16233700739DA5 /* KYVedioPlayer.h */,
-				0183C0BC2A16233700739DA5 /* KYVedioPlayer.m */,
+				01BAC5342A1F117E00FFD494 /* KyCommonCode.bundle */,
+				01BAC5352A1F117E00FFD494 /* KyCommonCode.h */,
+				01BAC5362A1F117E00FFD494 /* KyCommonCode.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -100,7 +100,6 @@
 				31AB10877DBCFF639686D458 /* Pods-VGOverlayPlayer.debug.xcconfig */,
 				016A6FEB2350D5B7454D1CFC /* Pods-VGOverlayPlayer.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -170,10 +169,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0183C0BF2A16233700739DA5 /* KYVedioPlayer.bundle in Resources */,
 				0183C0B12A1622DE00739DA5 /* LaunchScreen.storyboard in Resources */,
 				0183C0AE2A1622DE00739DA5 /* Assets.xcassets in Resources */,
 				0183C0AC2A1622DB00739DA5 /* Main.storyboard in Resources */,
+				01BAC5372A1F117E00FFD494 /* KyCommonCode.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,8 +209,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0183C0A92A1622DB00739DA5 /* ViewController.m in Sources */,
+				01BAC5382A1F117E00FFD494 /* KyCommonCode.m in Sources */,
 				0183C0A32A1622DB00739DA5 /* AppDelegate.m in Sources */,
-				0183C0BE2A16233700739DA5 /* KYVedioPlayer.m in Sources */,
 				0183C0B42A1622DE00739DA5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
