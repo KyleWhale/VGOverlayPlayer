@@ -41,29 +41,29 @@ typedef NS_ENUM(NSInteger, CloseBtnStyle){
 @optional
 ///播放器事件
 //点击播放暂停按钮代理方法
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode clickedPlayOrPauseButton:(UIButton *)ppBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode clickedPlayOrPauseButton:(UIButton *)ppBtn;
 //点击关闭按钮代理方法
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode clickedCloseButton:(UIButton *)closeBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode clickedCloseButton:(UIButton *)closeBtn;
 //点击分享按钮代理方法
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickShareBtn:(UIButton *)shareBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickShareBtn:(UIButton *)shareBtn;
 //点击字幕按钮
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickSubtitleBtn:(UIButton *)subtitleBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickSubtitleBtn:(UIButton *)subtitleBtn;
 //去除广告
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode advertisementBtn:(UIButton *)subtitleBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode advertisementBtn:(UIButton *)subtitleBtn;
 //锁屏
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode lockBtn:(UIButton *)lockBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode lockBtn:(UIButton *)lockBtn;
 //点击收藏按钮代理方法
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickCollectionBtn:(UIButton *)collectionBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode isFullscreen:(BOOL)isFullscreen onClickCollectionBtn:(UIButton *)collectionBtn;
 //点击episode按钮
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode onEpisodeBtn:(UIButton *)collectionBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode onEpisodeBtn:(UIButton *)collectionBtn;
 //点击下一章按钮
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode onNextBtn:(UIButton *)collectionBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode onNextBtn:(UIButton *)collectionBtn;
 //点击全屏按钮代理方法
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode clickedFullScreenButton:(UIButton *)fullScreenBtn;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode clickedFullScreenButton:(UIButton *)fullScreenBtn;
 //单击WMPlayer的代理方法
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode singleTaped:(UITapGestureRecognizer *)singleTap;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode singleTaped:(UITapGestureRecognizer *)singleTap;
 //双击WMPlayer的代理方法
--(void)KyCommonCode:(KyCommonCode *)KyCommonCode doubleTaped:(UITapGestureRecognizer *)doubleTap;
+-(void)kyCommonCode:(KyCommonCode *)KyCommonCode doubleTaped:(UITapGestureRecognizer *)doubleTap;
 
 ///播放状态
 //播放失败的代理方法
