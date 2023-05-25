@@ -378,8 +378,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self setAutoresizesSubviews:NO];
 
     [self.progressSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.leftTimeLabel.mas_right);
-        make.right.equalTo(self.rightTimeLabel.mas_left);
+        make.left.equalTo(self.leftTimeLabel.mas_right).offset(10);
+        make.right.equalTo(self.rightTimeLabel.mas_left).offset(-10);
         make.centerY.equalTo(self.leftTimeLabel);
     }];
 
@@ -402,13 +402,11 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self.leftTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bottomView).with.offset(40);
         make.centerY.equalTo(self.ppBtn);
-        make.width.mas_offset(35);
     }];
 
     [self.rightTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.bottomView).with.offset(-40);
         make.centerY.equalTo(self.ppBtn);
-        make.width.mas_offset(35);
     }];
 
     [self.closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -932,13 +930,11 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         [self.leftTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.bottomView).with.offset(40);
             make.bottom.equalTo(self.ppBtn.mas_top).with.offset(-12);
-            make.width.mas_equalTo(35);
         }];
         
         [self.rightTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView).with.offset(-40);
             make.bottom.equalTo(self.ppBtn.mas_top).with.offset(-12);
-            make.width.mas_equalTo(35);
         }];
         
         [self.fullScreenBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -995,13 +991,11 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         [self.leftTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.bottomView).with.offset(40);
             make.centerY.equalTo(self.ppBtn);
-            make.width.mas_offset(35);
         }];
 
         [self.rightTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView).with.offset(-40);
             make.centerY.equalTo(self.ppBtn);
-            make.width.mas_offset(35);
         }];
         [self.fullScreenBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView).with.offset(0);
@@ -1472,7 +1466,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         secondsStr = [@(seconds) stringValue];
     }
     NSString *intervalString;
-    if (hours > 1) {
+    if (hours > 0) {
         intervalString = [NSString stringWithFormat:@"%@:%@:%@", hoursStr, minutesStr, secondsStr];
     } else {
         intervalString = [NSString stringWithFormat:@"%@:%@", minutesStr, secondsStr];
