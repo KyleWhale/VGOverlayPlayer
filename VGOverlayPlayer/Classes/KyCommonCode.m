@@ -200,7 +200,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
     //左边时间
     self.leftTimeLabel = [[UILabel alloc]init];
-    self.leftTimeLabel.textAlignment = NSTextAlignmentLeft;
+    self.leftTimeLabel.adjustsFontSizeToFitWidth = YES;
+    self.leftTimeLabel.textAlignment = NSTextAlignmentCenter;
     self.leftTimeLabel.textColor = [UIColor whiteColor];
     self.leftTimeLabel.backgroundColor = [UIColor clearColor];
     self.leftTimeLabel.font = [UIFont systemFontOfSize:10];
@@ -208,7 +209,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
     //右边时间
     self.rightTimeLabel = [[UILabel alloc]init];
-    self.rightTimeLabel.textAlignment = NSTextAlignmentRight;
+    self.rightTimeLabel.adjustsFontSizeToFitWidth = YES;
+    self.rightTimeLabel.textAlignment = NSTextAlignmentCenter;
     self.rightTimeLabel.textColor = [UIColor whiteColor];
     self.rightTimeLabel.backgroundColor = [UIColor clearColor];
     self.rightTimeLabel.font = [UIFont systemFontOfSize:10];
@@ -402,11 +404,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self.leftTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bottomView).with.offset(40);
         make.centerY.equalTo(self.ppBtn);
+        make.width.mas_equalTo(54);
     }];
 
     [self.rightTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.bottomView).with.offset(-40);
         make.centerY.equalTo(self.ppBtn);
+        make.width.mas_equalTo(54);
     }];
 
     [self.closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -930,11 +934,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         [self.leftTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.bottomView).with.offset(40);
             make.bottom.equalTo(self.ppBtn.mas_top).with.offset(-12);
+            make.width.mas_equalTo(54);
         }];
         
         [self.rightTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView).with.offset(-40);
             make.bottom.equalTo(self.ppBtn.mas_top).with.offset(-12);
+            make.width.mas_equalTo(54);
         }];
         
         [self.fullScreenBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -991,11 +997,13 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         [self.leftTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.bottomView).with.offset(40);
             make.centerY.equalTo(self.ppBtn);
+            make.width.mas_equalTo(54);
         }];
 
         [self.rightTimeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView).with.offset(-40);
             make.centerY.equalTo(self.ppBtn);
+            make.width.mas_equalTo(54);
         }];
         [self.fullScreenBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView).with.offset(0);
@@ -1469,7 +1477,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     if (hours > 0) {
         intervalString = [NSString stringWithFormat:@"%@:%@:%@", hoursStr, minutesStr, secondsStr];
     } else {
-        intervalString = [NSString stringWithFormat:@"%@:%@", minutesStr, secondsStr];
+        intervalString = [NSString stringWithFormat:@"%@:%@:%@", @"00", minutesStr, secondsStr];
     }
     return intervalString;
 }
