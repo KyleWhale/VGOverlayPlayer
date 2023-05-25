@@ -23,12 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 播放器的几种状态
 typedef NS_ENUM(NSInteger, KYCommonCodeState) {
-   KYVedioPlayerStateFailed,        // 播放失败
-   KYVedioPlayerStateBuffering,     // 缓冲中
-   KYVedioPlayerStatusReadyToPlay,  // 将要播放
-   KYVedioPlayerStatePlaying,       // 播放中
-   KYVedioPlayerStateStopped,       //暂停播放
-   KYVedioPlayerStateFinished       //播放完毕
+   KYCommonCodeStateFailed,        // 播放失败
+   KYCommonCodeStateBuffering,     // 缓冲中
+   KYCommonCodeStatusReadyToPlay,  // 将要播放
+   KYCommonCodeStatePlaying,       // 播放中
+   KYCommonCodeStateStopped,       //暂停播放
+   KYCommonCodeStateFinished       //播放完毕
 };
 // 枚举值，包含播放器左上角的关闭按钮的类型
 typedef NS_ENUM(NSInteger, CloseBtnStyle){

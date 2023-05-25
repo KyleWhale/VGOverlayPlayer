@@ -659,7 +659,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     //视频的默认填充模式，AVLayerVideoGravityResizeAspect
     self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;//AVLayerVideoGravityResize;
     [self.layer insertSublayer:_playerLayer atIndex:0];
-    self.state = KYVedioPlayerStateBuffering;
+    self.state = KYCommonCodeStateBuffering;
     // 静音模式下播放声音
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -688,11 +688,11 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 {
     _state = state;
     // 控制菊花显示、隐藏
-    if (state == KYVedioPlayerStateBuffering) {
+    if (state == KYCommonCodeStateBuffering) {
         [self.loadingView startAnimating];
-    }else if(state == KYVedioPlayerStatePlaying){
+    }else if(state == KYCommonCodeStatePlaying){
         [self.loadingView stopAnimating];
-    }else if(state == KYVedioPlayerStatusReadyToPlay){
+    }else if(state == KYCommonCodeStatusReadyToPlay){
         [self.loadingView stopAnimating];
     }
     else{
@@ -1123,7 +1123,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  *  接收播放完成的通知
  **/
 - (void)moviePlayDidEnd:(NSNotification *)notification {
-    self.state            = KYVedioPlayerStateFinished;
+    self.state            = KYCommonCodeStateFinished;
     if (self.delegate&&[self.delegate respondsToSelector:@selector(finishKyAction:)]) {
         [self.delegate finishKyAction:self];
     }
@@ -1164,9 +1164,9 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         }
         self.playerLayer.player = nil;
         [self.player play];
-        self.state = KYVedioPlayerStatePlaying;
+        self.state = KYCommonCodeStatePlaying;
     }else{
-        self.state = KYVedioPlayerStateStopped;
+        self.state = KYCommonCodeStateStopped;
     }
 }
 /**
@@ -1186,10 +1186,10 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;//AVLayerVideoGravityResize;
         [self.layer insertSublayer:_playerLayer atIndex:0];
         [self.player play];
-        self.state = KYVedioPlayerStatePlaying;
+        self.state = KYCommonCodeStatePlaying;
 
     }else{
-        self.state = KYVedioPlayerStateStopped;
+        self.state = KYCommonCodeStateStopped;
     }
 }
 
@@ -1265,14 +1265,14 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
                 case AVPlayerStatusUnknown:
                 {
                     [self.loadingProgress setProgress:0.0 animated:NO];
-                    self.state = KYVedioPlayerStateBuffering;
+                    self.state = KYCommonCodeStateBuffering;
                     [self.loadingView startAnimating];
                 }
                     break;
 
                 case AVPlayerStatusReadyToPlay:
                 {
-                    self.state = KYVedioPlayerStatusReadyToPlay;
+                    self.state = KYCommonCodeStatusReadyToPlay;
                     // 双击的 Recognizer
                     UITapGestureRecognizer* doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
                     doubleTap.numberOfTapsRequired = 2; // 双击
@@ -1300,7 +1300,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
                     }
 
                     if (self.delegate && [self.delegate respondsToSelector:@selector(kyReadyAndCommonCode:state:)]) {
-                        [self.delegate kyReadyAndCommonCode:self state:KYVedioPlayerStatusReadyToPlay];
+                        [self.delegate kyReadyAndCommonCode:self state:KYCommonCodeStatusReadyToPlay];
                     }
                     [self.loadingView stopAnimating];
                     self.loadFailedLabel.hidden = YES;
@@ -1314,9 +1314,9 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 
                 case AVPlayerStatusFailed:
                 {
-                    self.state = KYVedioPlayerStateFailed;
+                    self.state = KYCommonCodeStateFailed;
                     if (self.delegate&&[self.delegate respondsToSelector:@selector(kyFailedAndCommonCode:state:)]) {
-                        [self.delegate kyFailedAndCommonCode:self state:KYVedioPlayerStateFailed];
+                        [self.delegate kyFailedAndCommonCode:self state:KYCommonCodeStateFailed];
                     }
                     NSError *error = [self.player.currentItem error];
                     if (error) {
@@ -1344,14 +1344,14 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
             [self.loadingView startAnimating];
             // 当缓冲是空的时候
             if (self.currentItem.playbackBufferEmpty) {
-                self.state = KYVedioPlayerStateBuffering;
+                self.state = KYCommonCodeStateBuffering;
                 [self loadedTimeRanges];
             }
         } else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {
             [self.loadingView stopAnimating];
             // 当缓冲好的时候
-            if (self.currentItem.playbackLikelyToKeepUp && self.state == KYVedioPlayerStateBuffering){
-                self.state = KYVedioPlayerStatePlaying;
+            if (self.currentItem.playbackLikelyToKeepUp && self.state == KYCommonCodeStateBuffering){
+                self.state = KYCommonCodeStatePlaying;
             }
         }
     }
@@ -1361,7 +1361,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
  */
 - (void)loadedTimeRanges
 {
-    self.state = KYVedioPlayerStateBuffering;
+    self.state = KYCommonCodeStateBuffering;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self.ppBtn.selected == NO) {
             [self play];
