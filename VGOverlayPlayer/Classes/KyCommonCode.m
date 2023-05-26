@@ -1691,47 +1691,42 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
 - (void)showLittleKyCommonCode:(KyCommonCode *)player withFatherView:(UIView *)fatherView withFrame:(CGRect )playerFrame{
 
     [player removeFromSuperview];
-    [UIView animateWithDuration:0.5f animations:^{
-        player.frame =CGRectMake(playerFrame.origin.x, playerFrame.origin.y, playerFrame.size.width, playerFrame.size.height);
-        player.playerLayer.frame =  player.bounds;
-        [fatherView addSubview:player];
-        
-        [player.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(player).with.offset(0);
-            make.right.equalTo(player).with.offset(0);
-            make.height.mas_equalTo(40);
-            make.bottom.equalTo(player).with.offset(0);
-        }];
-
-        [player.topView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(player).with.offset(0);
-            make.right.equalTo(player).with.offset(0);
-            make.height.mas_equalTo(40);
-            make.top.equalTo(player).with.offset(0);
-        }];
-
-
-        [player.closeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(player.topView).with.offset(5);
-            make.top.bottom.equalTo(player.topView);
-            make.width.mas_equalTo(30);
-        }];
-        if (player.loadingView.animating) {
-            [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self);
-            }];
-        }
-        [player.loadFailedLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(player);
-            make.width.equalTo(player);
-            make.height.equalTo(@30);
-        }];
-
-    } completion:^(BOOL finished) {
-        player.isFullscreen = NO;
-        player.fullScreenBtn.selected = NO;
-        [self reloadKyCommonCode:NO];
+    player.frame = CGRectMake(playerFrame.origin.x, playerFrame.origin.y, playerFrame.size.width, playerFrame.size.height);
+    player.playerLayer.frame =  player.bounds;
+    [fatherView addSubview:player];
+    
+    [player.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(player).with.offset(0);
+        make.right.equalTo(player).with.offset(0);
+        make.height.mas_equalTo(40);
+        make.bottom.equalTo(player).with.offset(0);
     }];
+    
+    [player.topView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(player).with.offset(0);
+        make.right.equalTo(player).with.offset(0);
+        make.height.mas_equalTo(40);
+        make.top.equalTo(player).with.offset(0);
+    }];
+    
+    [player.closeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(player.topView).with.offset(5);
+        make.top.bottom.equalTo(player.topView);
+        make.width.mas_equalTo(30);
+    }];
+    if (player.loadingView.animating) {
+        [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self);
+        }];
+    }
+    [player.loadFailedLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(player);
+        make.width.equalTo(player);
+        make.height.equalTo(@30);
+    }];
+    player.isFullscreen = NO;
+    player.fullScreenBtn.selected = NO;
+    [self reloadKyCommonCode:NO];
 }
 
 
